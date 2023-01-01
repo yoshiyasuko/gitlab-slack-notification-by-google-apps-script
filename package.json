@@ -1,0 +1,26 @@
+{
+  "name": "gitlab-slack-notification-by-google-apps-script",
+  "version": "1.0.0",
+  "description": "GitLab Slack Notification on Google Apps Script",
+  "main": "index.js",
+  "scripts": {
+    "commit": "git-cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoshiyasuko/gitlab-slack-notification-by-google-apps-script.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yoshiyasuko/gitlab-slack-notification-by-google-apps-script/issues"
+  },
+  "homepage": "https://github.com/yoshiyasuko/gitlab-slack-notification-by-google-apps-script#readme",
+  "devDependencies": {
+    "git-cz": "^4.9.0"
+  },
+  "dependencies": {
+    "@types/google-apps-script": "^1.0.56"
+  }
+}
