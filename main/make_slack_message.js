@@ -13,7 +13,7 @@ function makeSlackMessage_(data) {
         return null;
       }
       message += `${data.user.name} Merge Request ${MR_ACTIONS[data.object_attributes.action]} `;
-      message += `[<${removePortNoFromUrl_(data.object_attributes.url)}|${data.object_attributes.title}>]`;
+      message += `[<${data.object_attributes.url}|${data.object_attributes.title}>]`;
       return message;
     // コメントイベント
     case "note":
@@ -25,12 +25,12 @@ function makeSlackMessage_(data) {
             if (data.merge_request.assignee_ids) {
               message += convertSlackUserIdsFromGitLabUserIds_(data.merge_request.assignee_ids);
             }
-            message += `${data.user.name} LGTM on [<${removePortNoFromUrl_(data.merge_request.url)}|${data.merge_request.title}>]`;
+            message += `${data.user.name} LGTM on [<${data.merge_request.url}|${data.merge_request.title}>]`;
             return message;
           } else {
             // それ以外のコメントの場合は、コメント内のメンション名に従いメンションする 
             message += convertSlackUserIdsFromComments_(data.object_attributes.note);
-            message += `${data.user.name} Commented on [<${removePortNoFromUrl_(data.merge_request.url)}|${data.merge_request.title}>]`;
+            message += `${data.user.name} Commented on [<${data.merge_request.url}|${data.merge_request.title}>]`;
             return message;
           }
         // 現在はそれ以外のコメントは通知しない
