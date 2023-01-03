@@ -1,6 +1,22 @@
 const _ = Underscore.load();
 
 /*
+  GASスクリプトプロパティからWebhook URLを取得
+*/
+function getWebhookUrl_() {
+  const properties = PropertiesService.getScriptProperties();
+  return properties.getProperty('SLACK_WEBHOOK_URL');
+}
+
+/*
+  GASスクリプトプロパティから通知チャンネル名を取得
+*/
+function getChannelName_() {
+  const properties = PropertiesService.getScriptProperties();
+  return properties.getProperty('SLACK_CHANNEL_NAME');
+}
+
+/*
   GitLabユーザー名の配列から、SlackユーザーIDを連結した文字列への変換
 */
 function convertSlackUserIdsFromComments_(comment) {
