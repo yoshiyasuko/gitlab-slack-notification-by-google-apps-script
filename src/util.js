@@ -1,5 +1,3 @@
-const _ = Underscore.load();
-
 /*
   GASスクリプトプロパティからWebhook URLを取得
 */
@@ -57,7 +55,7 @@ function convertSlackUserIdsFromComments_(comment) {
   }
   gitlabMentionNames = gitlabMentionNames.map(name => name.replace('@', ''));
   for (let i in gitlabMentionNames) {
-    let user = _.find(getUsers_(), function(user) {
+    let user = getUsers_().find(function(user) {
       return user.gitlabName == gitlabMentionNames[i];
     })
     if (!user) { 
@@ -77,7 +75,7 @@ function convertSlackUserIdFromGitLabName_(gitlabName) {
   if (!gitlabName) {
     return slackUserIdString;
   }
-  let user = _.find(getUsers_(), function(user) {
+  let user = getUsers_().find(function(user) {
     return user.gitlabName == gitlabName;
   });
   if (!user) {
@@ -97,7 +95,7 @@ function convertSlackUserIdsFromGitLabUserIds_(gitlabIds) {
     return slackUserIdsString;
   }
   for (let i in gitlabIds) {
-    let user = _.find(getUsers_(), function(user) {
+    let user = getUsers_().find(function(user) {
       return user.gitlabId == gitlabIds[i];
     })
     if (!user) {
