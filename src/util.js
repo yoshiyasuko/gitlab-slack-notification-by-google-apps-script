@@ -17,6 +17,32 @@ function getChannelName_() {
 }
 
 /*
+  GASスクリプトプロパティからスプレッドシートIDを取得
+*/
+function getSpreadsheetId_() {
+  const properties = PropertiesService.getScriptProperties();
+  return properties.getProperty('USER_SPREADSHEET_ID');
+}
+
+/*
+  ユーザー一覧をスプレッドシートから取得
+*/
+function getUsers_() {
+  const spreadsheetId = getSpreadsheetId_();
+  const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
+  const sheet = spreadsheet.getActiveSheet();
+
+  // ユーザー情報を取得
+  let users = sheet.getDataRange().getValues();
+  users.shift();  // 先頭行は属性名なので削除
+
+  users = users.map(function(user) {
+    return new User(user[0], user[1], user[2], user[3]);
+  });
+  return users;
+}
+
+/*
   GitLabユーザー名の配列から、SlackユーザーIDを連結した文字列への変換
 */
 function convertSlackUserIdsFromComments_(comment) {
@@ -26,17 +52,19 @@ function convertSlackUserIdsFromComments_(comment) {
   }
   // コメント内にあるGitLabユーザー名メンションの取得
   let gitlabMentionNames = comment.match(/@[a-zA-Z0-9_.\-]+/g);
+  if (!gitlabMentionNames) {
+    return slackUserIdsString;
+  }
+  gitlabMentionNames = gitlabMentionNames.map(name => name.replace('@', ''));
   for (let i in gitlabMentionNames) {
-    let user = _.find(USER_NAME_LIST, function(user) {
-      return user.gitlab == gitlabMentionNames[i];
+    let user = _.find(getUsers_(), function(user) {
+      return user.gitlabName == gitlabMentionNames[i];
     })
     if (!user) { 
       continue;
     }
-    // Slack IDがある場合はそちらを優先する
-    let slackName = user.slackId || user.slack;
     // メンションとして機能するように半角スペースを後ろに空ける
-    slackUserIdsString += `${slackName} `;
+    slackUserIdsString += `<@${user.slackUserId}> `;
   }
   return slackUserIdsString;
 }
@@ -49,16 +77,14 @@ function convertSlackUserIdFromGitLabName_(gitlabName) {
   if (!gitlabName) {
     return slackUserIdString;
   }
-  let user = _.find(USER_NAME_LIST, function(user) {
-    return user.gitlab == `@${gitlabName}`;
+  let user = _.find(getUsers_(), function(user) {
+    return user.gitlabName == gitlabName;
   });
   if (!user) {
     return slackUserIdString;
   }
-  // Slack IDがある場合はそちらを優先する
-  let slackName = user.slackId || user.slack;
   // メンションとして機能するように半角スペースを後ろに空ける
-  slackUserIdString += `${slackName} `;
+  slackUserIdString += `<@${user.slackUserId}> `;
   return slackUserIdString;
 }
 
@@ -71,16 +97,14 @@ function convertSlackUserIdsFromGitLabUserIds_(gitlabIds) {
     return slackUserIdsString;
   }
   for (let i in gitlabIds) {
-    let user = _.find(USER_NAME_LIST, function(user) {
-      return user.id == gitlabIds[i];
+    let user = _.find(getUsers_(), function(user) {
+      return user.gitlabId == gitlabIds[i];
     })
     if (!user) {
       continue;
     }
-    // Slack IDがある場合はそちらを優先する
-    let slackName = user.slackId || user.slack;
     // メンションとして機能するように半角スペースを後ろに空ける
-    slackUserIdsString += `${slackName} `;
+    slackUserIdsString += `<@${user.slackUserId}> `;
   }
   return slackUserIdsString;
 }
