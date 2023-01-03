@@ -2,7 +2,7 @@
   GASスクリプトプロパティからWebhook URLを取得
 */
 function getWebhookUrl_() {
-  const properties = PropertiesService.getScriptProperties();
+  let properties = PropertiesService.getScriptProperties();
   return properties.getProperty('SLACK_WEBHOOK_URL');
 }
 
@@ -10,7 +10,7 @@ function getWebhookUrl_() {
   GASスクリプトプロパティから通知チャンネル名を取得
 */
 function getChannelName_() {
-  const properties = PropertiesService.getScriptProperties();
+  let properties = PropertiesService.getScriptProperties();
   return properties.getProperty('SLACK_CHANNEL_NAME');
 }
 
@@ -18,7 +18,7 @@ function getChannelName_() {
   GASスクリプトプロパティからスプレッドシートIDを取得
 */
 function getSpreadsheetId_() {
-  const properties = PropertiesService.getScriptProperties();
+  let properties = PropertiesService.getScriptProperties();
   return properties.getProperty('USER_SPREADSHEET_ID');
 }
 
@@ -26,9 +26,9 @@ function getSpreadsheetId_() {
   ユーザー一覧をスプレッドシートから取得
 */
 function getUsers_() {
-  const spreadsheetId = getSpreadsheetId_();
-  const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-  const sheet = spreadsheet.getActiveSheet();
+  let spreadsheetId = getSpreadsheetId_();
+  let spreadsheet = SpreadsheetApp.openById(spreadsheetId);
+  let sheet = spreadsheet.getActiveSheet();
 
   // ユーザー情報を取得
   let users = sheet.getDataRange().getValues();

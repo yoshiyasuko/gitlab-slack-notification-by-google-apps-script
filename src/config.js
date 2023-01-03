@@ -10,10 +10,3 @@ const MR_ACTIONS = {
   "unapproved": "Unapproved",
   "merge": "Merged",
 };
-
-// GitLabユーザー名とSlackユーザーIDの対応表
-// Slack APIでメッセージを送信する場合は「@〜」でのメンションは機能せず、「<@user_id>」という形式で送信する必要がある
-// see: https://api.slack.com/changelog/2017-09-the-one-about-usernames
-const USER_NAME_LIST = [
-  // ex: { name: '高', id: '99999', gitlab: '@gitlab-user-name', slack: '<@user_id>' }
-];
