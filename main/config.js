@@ -1,6 +1,3 @@
-const SLACK_WEBHOOK_URL = '<enter webhook url of your slack workspace>';
-const SLACK_CHANNEL_NAME = '<enter target slack channel name>';
-
 // MRのアクション名に対応する文字列表
 // コメントアウトしたアクションは通知されなくなる
 // see: https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html#merge-request-events

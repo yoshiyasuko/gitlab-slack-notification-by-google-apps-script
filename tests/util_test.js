@@ -5,12 +5,12 @@ function test_CallSlackWebhook() {
     method: 'post',
     contentType: 'application/json',
     payload: JSON.stringify({
-      channel: SLACK_CHANNEL_NAME,
+      channel: getChannelName_(),
       text:'テストおおおおおおおおおおおおおおお',
       link_names: 1,
     })
   };
-  let response = UrlFetchApp.fetch(SLACK_WEBHOOK_URL, params);
+  let response = UrlFetchApp.fetch(getWebhookUrl_(), params);
   console.log("response:", response);
   return response;
 }
