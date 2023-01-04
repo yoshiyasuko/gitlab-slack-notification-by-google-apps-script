@@ -13,12 +13,12 @@ function doPost(e) {
     method: 'post',
     contentType: 'application/json',
     payload: JSON.stringify({
-      channel: getChannelName_(),
+      channel: PropertiesUtil.getChannelName(),
       text: message,
       link_names: 1,
     })
   };
-  let response = UrlFetchApp.fetch(getWebhookUrl_(), params);
+  let response = UrlFetchApp.fetch(PropertiesUtil.getWebhookUrl(), params);
   console.log("response", response);
   return response;
 }

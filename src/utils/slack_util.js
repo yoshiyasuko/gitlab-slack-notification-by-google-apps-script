@@ -61,7 +61,7 @@ class SlackUtil {
     }
     gitlabMentionNames = gitlabMentionNames.map(name => name.replace('@', ''));
     for (let i in gitlabMentionNames) {
-      let user = getUsers_().find(function(user) {
+      let user = PropertiesUtil.getUsers().find(function(user) {
         return user.gitlabName == gitlabMentionNames[i];
       })
       if (!user) { 
@@ -81,7 +81,7 @@ class SlackUtil {
     if (!gitlabName) {
       return slackUserIdString;
     }
-    let user = getUsers_().find(function(user) {
+    let user = PropertiesUtil.getUsers().find(function(user) {
       return user.gitlabName == gitlabName;
     });
     if (!user) {
@@ -101,7 +101,7 @@ class SlackUtil {
       return slackUserIdsString;
     }
     for (let i in gitlabIds) {
-      let user = getUsers_().find(function(user) {
+      let user = PropertiesUtil.getUsers().find(function(user) {
         return user.gitlabId == gitlabIds[i];
       })
       if (!user) {
