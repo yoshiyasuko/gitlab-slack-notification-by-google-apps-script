@@ -4,7 +4,7 @@ function doPost(e) {
   console.log("data", data);  // 送られてきたデータはログを残す
 
   // 通知メッセージを作成
-  let message = makeSlackMessage_(data);
+  let message = SlackUtil.makeSlackMessage(data);
   if (!message) {
     return;
   }
@@ -13,12 +13,12 @@ function doPost(e) {
     method: 'post',
     contentType: 'application/json',
     payload: JSON.stringify({
-      channel: getChannelName_(),
+      channel: PropertiesUtil.getChannelName(),
       text: message,
       link_names: 1,
     })
   };
-  let response = UrlFetchApp.fetch(getWebhookUrl_(), params);
+  let response = UrlFetchApp.fetch(PropertiesUtil.getWebhookUrl(), params);
   console.log("response", response);
   return response;
 }
