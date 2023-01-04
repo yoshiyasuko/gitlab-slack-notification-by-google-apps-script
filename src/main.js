@@ -4,7 +4,7 @@ function doPost(e) {
   console.log("data", data);  // 送られてきたデータはログを残す
 
   // 通知メッセージを作成
-  let message = makeSlackMessage_(data);
+  let message = SlackUtil.makeSlackMessage(data);
   if (!message) {
     return;
   }
